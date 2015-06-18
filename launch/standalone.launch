@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="joy_node" pkg="joy" type="joy_node" args="" />
+  
+  <node name="multirobot_joystick_controller_node" pkg="multirobot_joystick_controller" type="multirobot_joystick_controller_node.py" args="" />
+</launch>

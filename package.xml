@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<package>
+  <name>multirobot_joystick_controller</name>
+  <version>1.0.0</version>
+  <description>
+    This code is not really configurable. You may have to change the
+    "Config Values" in head of the Python File and maybe even more in the
+    code.
+
+    usage
+    ---------
+
+    1. Select a Robot with the **X**, **Y**, **A**, **B** buttons.
+    2. Press and hold the dead-men key (left shoulder button).
+    3. Drive the robot, left analog stick linear velocity, right analog
+    stick for rotation
+
+    config values
+    -------------
+
+    - **REFRESH_RATE** - refresh rate of the service, can by low, does not effect message receiving
+    - **ROBOT_MAX_VELOCITY** - the maximum velocity
+    - **ROBOT_ROTATION_SCALE** - the robot rotation scale factor, 1.0 => max robot rotation 2*pi rad/s
+    - **DEADMAN_BUTTON** - button id of the dead-man button
+    - **TWISTMSG_TOPIC** - topic name for the Twist velocity messages
+    - **JOYSTICK_TOPIC** - topic name of the ROS joystick node
+    - **ROBOTS_LIST** - list with robots (namespace names)
+  </description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag --> 
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="LarsKistner@sr4l.de">Lars Kistner</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>BSD</license>
+
+
+  <!-- Url tags are optional, but mutiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- <url type="website">http://wiki.ros.org/multirobot_joystick_controller</url> -->
+  <url type="website">http://github.com/Sr4l/multirobot_joystick_controller</url>
+
+
+  <!-- Author tags are optional, mutiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintianers, but could be -->
+  <!-- Example: -->
+  <author email="LarsKistner@sr4l.de">Lars Kistner</author>
+
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  
+  <run_depend>rospy</run_depend>
+</package>
