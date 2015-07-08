@@ -2,5 +2,11 @@
 <launch>
   <node name="joy_node" pkg="joy" type="joy_node" args="" />
   
-  <node name="multirobot_joystick_controller_node" pkg="multirobot_joystick_controller" type="multirobot_joystick_controller_node.py" args="" />
+  <node name="multirobot_joystick_controller_node" pkg="multirobot_joystick_controller" type="multirobot_joystick_controller_node.py" args="">
+    <remap from="/Turtlebot1/cmd_vel" to="/Turtlebot1/cmd_vel"/>
+    <remap from="/Turtlebot2/cmd_vel" to="/Turtlebot2/cmd_vel"/>
+    <remap from="/Turtlebot3/cmd_vel" to="/Turtlebot3/cmd_vel"/>
+    <remap from="/Turtlebot4/cmd_vel" to="/Turtlebot4/cmd_vel"/>
+    <remap from="/joy" to="/joy"/>
+  </node>
 </launch>

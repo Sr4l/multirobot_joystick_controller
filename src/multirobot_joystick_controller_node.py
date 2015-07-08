@@ -50,7 +50,7 @@ REFRESH_RATE = 1.0
 ROBOT_MAX_VELOCITY = 0.5
 ROBOT_ROTATION_SCALE = 0.5
 DEADMAN_BUTTON = 4
-TWISTMSG_TOPIC = "{}/mobile_base/commands/velocity"
+TWISTMSG_TOPIC = "{}/cmd_vel"
 JOYSTICK_TOPIC = "/joy"
 ROBOTS_LIST = ["Turtlebot3", "Turtlebot2", "Turtlebot1", "Turtlebot4"]
 
