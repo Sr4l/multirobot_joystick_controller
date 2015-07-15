@@ -42,6 +42,7 @@ roslib.load_manifest('multirobot_joystick_controller')
 import rospy
 import tf
 
+from kobuki_msgs.msg import MotorPower
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 
@@ -52,14 +53,16 @@ ROBOT_ROTATION_SCALE = 0.5
 DEADMAN_BUTTON = 4
 TWISTMSG_TOPIC = "{}/cmd_vel"
 JOYSTICK_TOPIC = "/joy"
+POWER_TOPIC = "{}/mobile_base/commands/motor_power"
 ROBOTS_LIST = ["Turtlebot3", "Turtlebot2", "Turtlebot1", "Turtlebot4"]
 
 class MultirobotJoystickControll(object):
     def __init__(self):
         subscriber = rospy.Subscriber(JOYSTICK_TOPIC, Joy, self.handle_joystick)
-        self.selected_robot = False
+        self.selected_robot = 0
         self.robots = ROBOTS_LIST
         self.velo_pub = [rospy.Publisher(TWISTMSG_TOPIC.format(r), Twist, queue_size=10) for r in self.robots]
+        self.power_pub = [rospy.Publisher(POWER_TOPIC.format(r), MotorPower, queue_size=2) for r in self.robots]
     
     def check_new_selected_robot(self, button_states):
         robot_select = button_states[:4]
@@ -80,6 +83,14 @@ class MultirobotJoystickControll(object):
         msg.angular.z = turn*2*pi*ROBOT_ROTATION_SCALE
         
         self.velo_pub[self.selected_robot].publish(msg)
+
+    def powerup(self, up=True):
+        if up:
+            rospy.loginfo("{}: powered up".format(ROBOTS_LIST[self.selected_robot]))
+            self.power_pub[self.selected_robot].publish(MotorPower(1))
+        else:
+            rospy.loginfo("{}: powered down".format(ROBOTS_LIST[self.selected_robot]))
+            self.power_pub[self.selected_robot].publish(MotorPower(0))
     
     def handle_joystick(self, msg):
         ## Xbox 360 Controller
@@ -93,6 +104,13 @@ class MultirobotJoystickControll(object):
         self.check_new_selected_robot(msg.buttons)
         if msg.buttons[DEADMAN_BUTTON]:
             self.handle_move(msg.axes[1], msg.axes[3])
+        else:
+            self.handle_move(0.0, 0.0)
+        
+        if msg.axes[5] < 0:
+            self.powerup(False)
+        elif msg.axes[2] < 0:
+            self.powerup(True)
 
 def main():
     rospy.loginfo("Init node")
