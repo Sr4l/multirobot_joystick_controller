@@ -52,13 +52,13 @@ ROBOT_MAX_VELOCITY = 0.5
 ROBOT_ROTATION_SCALE = 0.5
 DEADMAN_BUTTON = 4
 TWISTMSG_TOPIC = "{}/cmd_vel"
-JOYSTICK_TOPIC = "/joy"
 POWER_TOPIC = "{}/mobile_base/commands/motor_power"
 ROBOTS_LIST = ["Turtlebot3", "Turtlebot2", "Turtlebot1", "Turtlebot4"]
 
 class MultirobotJoystickControll(object):
     def __init__(self):
-        subscriber = rospy.Subscriber(JOYSTICK_TOPIC, Joy, self.handle_joystick)
+        self.joy_topic = rospy.get_param("~joy", "/joy")
+        subscriber = rospy.Subscriber(self.joy_topic, Joy, self.handle_joystick)
         self.selected_robot = 0
         self.robots = ROBOTS_LIST
         self.velo_pub = [rospy.Publisher(TWISTMSG_TOPIC.format(r), Twist, queue_size=10) for r in self.robots]
